@@ -3,7 +3,7 @@ This code provides allows you to demo the basics of Server Side Ad Insertion Tec
 
 It is as simple static webserver that delivers different content based on the browser we are using demonstrating we can target content based on user data (User agent in this case)
 
-Note: This repo includes the media used in the demo, so it is quite "heavy"
+This repo includes the media used in the demo, so it is quite "heavy"
 
 # Install
 1- Clone this repo

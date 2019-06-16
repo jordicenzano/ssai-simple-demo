@@ -22,3 +22,6 @@ node index.js
 ```
 http://localhost:8081/chunklist-tar.m3u8
 ```
+At this point when you reach seconds 8.6 you should see different content depending if you use Safari or Chrome
+
+Note: Only tested in MAC OS

@@ -7,17 +7,23 @@
 
  "use strict";
 
-// Creating webserver
 const express = require('express');
 const cors = require('cors');
 const app = express();
 const fs = require('fs');
 const path = require('path');
 
+// Port
 const APP_LISTEN_PORT = 8081
 
+// Replacement tag
 const REPLACEMENT_TAG = "#MMSYS-REPLACEMENT-ADBREAK\n"
 
+// Replacement data
+const REPLACEMENT_FOR_TARGET_0 = `#EXT-X-DISCONTINUITY\n#EXTINF:5.0,\nad0.ts\n#EXT-X-DISCONTINUITY\n`;
+const REPLACEMENT_FOR_TARGET_1 = `#EXT-X-DISCONTINUITY\n#EXTINF:5.0,\nad1.ts\n#EXT-X-DISCONTINUITY\n`;
+
+// CORS data
 const corsOptions = {
     origin: '*',
     methods: ['GET', 'PUT', 'POST'],
@@ -26,9 +32,10 @@ const corsOptions = {
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
+// Apply CORS
 app.use(cors(corsOptions));
 
-// Get manifest
+// Get manifest and do the replacements
 app.get('/chunklist-tar.m3u8', function (req, res, next) {
     const ua = req.headers["user-agent"];
 
@@ -48,7 +55,7 @@ app.get('/chunklist-tar.m3u8', function (req, res, next) {
     sendStaticContent(Buffer.from(manifestDataStr, 'utf8'), res, 'application/x-mpegURL');
 });
 
-// Get any static file
+// Get any static file (chunks, and any other than /chunklist-tar.m3u8)
 app.get('/:mediafile', function (req, res, next) {
     
     console.log(`Received media request to: ${req.params.mediafile}`);
@@ -58,6 +65,8 @@ app.get('/:mediafile', function (req, res, next) {
 
 // Start webserver
 app.listen(APP_LISTEN_PORT, () => console.log(`App listening on port ${APP_LISTEN_PORT}!`));
+
+// HELPER FUNCTIONS -------------------
 
 // Check if UA is from Chrome
 function isUAChrome(ua) {
@@ -85,15 +94,15 @@ function sendStaticContent(data, res, contentType) {
     return res.status(200).send(data);
 }
 
-// Replace chunklist data
+// Replace chunklist tag
 function targetedReplacement(manifestDataStr, targetGroup) {
     let manifestDataReplaced = manifestDataStr.replace(REPLACEMENT_TAG, "");
 
     if (targetGroup == 0) {
-        manifestDataReplaced = manifestDataStr.replace(REPLACEMENT_TAG, `#EXT-X-DISCONTINUITY\n#EXTINF:5.0,\nad0.ts\n#EXT-X-DISCONTINUITY\n`);
+        manifestDataReplaced = manifestDataStr.replace(REPLACEMENT_TAG, REPLACEMENT_FOR_TARGET_0);
     }
     else {
-        manifestDataReplaced = manifestDataStr.replace(REPLACEMENT_TAG, `#EXT-X-DISCONTINUITY\n#EXTINF:5.0,\nad1.ts\n#EXT-X-DISCONTINUITY\n`);
+        manifestDataReplaced = manifestDataStr.replace(REPLACEMENT_TAG, REPLACEMENT_FOR_TARGET_1);
     }
 
     return manifestDataReplaced;

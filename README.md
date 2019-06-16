@@ -12,7 +12,7 @@ git clone git@github.com:jordicenzano/ssai-simple-demo.git
 ```
 2- Install dependencies
 ```
-    npm install
+npm install
 ```
 3- Run de webserver
 ```

@@ -8,6 +8,7 @@ Note: This repo includes the media used in the demo, so it is quite "heavy"
 # Install
 1- Clone this repo
 ```
+git clone git@github.com:jordicenzano/ssai-simple-demo.git
 ```
 2- Install dependencies
 ```

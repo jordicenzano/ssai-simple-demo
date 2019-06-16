@@ -1,0 +1,20 @@
+{
+  "name": "ssai-simple-demo",
+  "version": "1.0.0",
+  "description": "Simple demo of manifest personalization",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hls",
+    "video",
+    "ssai"
+  ],
+  "author": "Jordi Cenzano",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}

@@ -44,11 +44,11 @@ app.get('/chunklist-tar.m3u8', function (req, res, next) {
     let manifestDataStr = manifestData.toString();
 
     if (!isUAChrome(ua)) {
-        console.log(`Received manifest request identified SAFARI (Group 0), UA: ${ua}`);
+        console.log(`Received manifest request identified SAFARI/Other (Group 0), UA: ${ua}`);
         manifestDataStr = targetedReplacement(manifestDataStr, 0);   
     }
     else {
-        console.log(`Received manifest request identified OTHER (Group 1), UA: ${ua}`);
+        console.log(`Received manifest request identified Chrome (Group 1), UA: ${ua}`);
         manifestDataStr = targetedReplacement(manifestDataStr, 1)
     }
 
